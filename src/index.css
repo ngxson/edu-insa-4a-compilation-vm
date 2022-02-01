@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container {
+  margin: 1em;
+}
+
+.instruction-tab {
+  font-family: monospace;
+  width: 100%;
+}
+
+.active-ip { background-color: rgb(180, 210, 255); }
+.t-memaddr { background-color: rgb(216, 255, 180); }
+.t-insaddr { background-color: rgb(180, 210, 255); }
+.legend {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
