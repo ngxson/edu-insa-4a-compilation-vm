@@ -15,9 +15,11 @@ function Editor({code, setCode, onAssemblyCodeChanged, goToImport}) {
   );
 }
 
-function CodeEditor({onAssemblyCodeChanged}) {
+function CodeEditor({onAssemblyCodeChanged, show}) {
   const [code, setCode] = useState('');
   const [showDemoProgs, setShowDemoProgs] = useState(false);
+
+  if (!show) return null;
 
   return (
     <div className="card">

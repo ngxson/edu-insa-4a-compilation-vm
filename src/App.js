@@ -42,9 +42,7 @@ function App() {
           {!showCodeEditor &&
             <CodeViewer program={machine.program} ip={machine.ip} handleShowEditor={() => setShowCodeEditor(true)} />
           }
-          {showCodeEditor &&
-            <CodeEditor onAssemblyCodeChanged={setAssemblyCode} />
-          }
+          <CodeEditor onAssemblyCodeChanged={setAssemblyCode} show={showCodeEditor} />
           <br/><br/><br/><br/><br/><br/><br/><br/><br/>
           {!showCodeEditor &&
             <MachineControl machine={machine} tickFn={tickFn} />

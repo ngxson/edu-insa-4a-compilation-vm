@@ -23,7 +23,7 @@ function CodeViewer({program, ip, handleShowEditor}) {
               <tbody key={i}>
                 <tr className={instruction && instruction.addr === ip ? 'active-ip' : ''}>
                   <td>{instruction ? instruction.addr : ''}</td>
-                  <td className="code">{text}</td>
+                  <td className="code">{text.replace(/ /g, "\u00a0")}</td>
                 </tr>
               </tbody>
             ))}

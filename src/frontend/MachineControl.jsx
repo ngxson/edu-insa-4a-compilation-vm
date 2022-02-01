@@ -27,19 +27,20 @@ function MachineControl({machine, tickFn}) {
           BP: {machine.bp}<br/>
           SP: {machine.sp}<br/>
           IP: {machine.ip}<br/>
+          Clock: {machine.clk}<br/>
         </p>
         <button className="btn btn-secondary" onClick={toggleAuto}>{intervalId
-          ? <>Pause <i class="fas fa-pause"></i></>
-          : <>Play <i class="fas fa-play"></i></>
+          ? <>Pause <i className="fas fa-pause"></i></>
+          : <>Play <i className="fas fa-play"></i></>
         }</button>
         &nbsp;&nbsp;
         <button className="btn btn-secondary" onClick={() => tickFn(true)}>
-          <i class="fas fa-arrow-left"></i>
+          <i className="fas fa-arrow-left"></i>
         </button>
         &nbsp;&nbsp;
         <button className="btn btn-primary" onClick={() => tickFn()}>
           Next tick
-          <i class="fas fa-arrow-right"></i>
+          <i className="fas fa-arrow-right"></i>
         </button>
       </div>
     </div>

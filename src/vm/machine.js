@@ -5,6 +5,7 @@ class Machine {
   bp = 0; // base pointer
   sp = 0; // stack pointer
   ip = 0; // instruction pointer
+  clk = 0; // clock clount
   memory = new Memory();
   program = new Program();
   history = []; // list of snapshots
@@ -29,6 +30,7 @@ class Machine {
       throw e;
     }
     this.ip++;
+    this.clk++;
   }
 
   // go back to last state
@@ -39,6 +41,7 @@ class Machine {
     this.sp = snapshot.sp;
     this.ip = snapshot.ip;
     this.memory = snapshot.memory;
+    this.clk = snapshot.clk;
   }
 
   _getXY = () => {
@@ -58,6 +61,7 @@ class Machine {
       bp: this.bp,
       sp: this.sp,
       ip: this.ip,
+      clk: this.clk,
       memory: this.memory.clone(),
     };
     this.history.push(snapshot);

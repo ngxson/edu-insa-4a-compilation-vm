@@ -172,12 +172,12 @@ function DemoPrograms({setCode, backToEditor}) {
   return (
     <>
       <button className="btn btn-primary" onClick={backToEditor}>
-        <i class="fas fa-arrow-left"></i>
+        <i className="fas fa-arrow-left"></i>
         Back to editor
       </button><br/>
       <b>Demo programs:</b><br/>
-      {DEMO_PROGS.map(prog => (
-        <div>
+      {DEMO_PROGS.map((prog, i) => (
+        <div key={i}>
           <b>{prog.name}</b>
           &nbsp;&nbsp;
           <button className="btn btn-primary" onClick={() => importCode(prog.asm)}>Import</button>

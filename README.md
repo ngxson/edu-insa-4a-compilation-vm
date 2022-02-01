@@ -14,6 +14,10 @@ ability to save `type` of data for debugging
 ability to skip comment blocks (comments can start with any non-alphabetic characters like `;`, `#` or `//`)
 ability translate label to address
 
+## TODO
+
+- Support keyboard arrows
+
 ## Author
 
 This project is made by [ngxson](https://ngxson.com) 
