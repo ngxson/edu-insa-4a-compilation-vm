@@ -1,6 +1,7 @@
 # Stack-based virtual machine
 
-For using in "Compilation" subject (INSA).
+For using in "Compilation" subject (INSA).  
+Live version: [https://edu-insa-4a-compilation-vm.netlify.app/](https://edu-insa-4a-compilation-vm.netlify.app/) 
 
 ## Structure
 
