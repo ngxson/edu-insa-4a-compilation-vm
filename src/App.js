@@ -17,13 +17,16 @@ function App() {
   }, []);
 
   const tickFn = (isUntick=false) => {
+    let hasError = false;
     try {
       if (!isUntick) machine.tick();
       else machine.untick();
     } catch (e) {
       window.toastr.error(e.message);
+      hasError = true;
     }
     render(Date.now());
+    return hasError;
   };
 
   const setAssemblyCode = (code) => {

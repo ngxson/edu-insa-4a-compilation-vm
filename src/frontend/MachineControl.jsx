@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function MachineControl({machine, tickFn}) {
   const [intervalId, setIntervalId] = useState();
+
+  useEffect(() => () => {
+    if (intervalId) clearInterval(intervalId);
+  }, [intervalId]);
 
   const toggleAuto = () => {
     if (intervalId) {
@@ -9,7 +13,15 @@ function MachineControl({machine, tickFn}) {
       setIntervalId(null);
     } else {
       tickFn();
-      const id = setInterval(tickFn, 500);
+      const id = setInterval(() => {
+        const hasError = tickFn();
+        // stop on having error
+        if (hasError) {
+          window.toastr.info('Stop due to error');
+          clearInterval(id);
+          setIntervalId(null);
+        }
+      }, 500);
       setIntervalId(id);
     }
   }
