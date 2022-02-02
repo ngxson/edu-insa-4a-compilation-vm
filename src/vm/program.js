@@ -2,8 +2,8 @@ const isInteger = num => /^-?[0-9]+$/.test(num+'');
 
 class Program {
   instructions = [];
-  lines = [];
-  labelTable = {};
+  lines = []; // [{text, instruction}, ...]
+  labelTable = {}; // 'label' => addr
 
   loadProgram = (assemblyCode, supportedInstructions) => {
     // breaks input code to array of text lines
@@ -36,6 +36,20 @@ class Program {
     
     //console.log(this.instructions);
     //console.log(this.lines);
+  }
+
+  setBreakpoint = (addr) => {
+    const instruction = this.instructions[addr];
+    if (instruction) {
+      instruction.breakpoint = true;
+    }
+  }
+
+  removeBreakpoint = (addr) => {
+    const instruction = this.instructions[addr];
+    if (instruction) {
+      instruction.breakpoint = false;
+    }
   }
 
   labelToInstructionAddress = (label) => {

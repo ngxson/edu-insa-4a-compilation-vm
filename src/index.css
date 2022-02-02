@@ -30,3 +30,6 @@ code {
   width: 20px;
   margin-right: 10px;
 }
+
+.brk-inactive { cursor: pointer; color: rgb(196, 196, 196) }
+.brk-active { cursor: pointer; color: rgb(238, 58, 58) }

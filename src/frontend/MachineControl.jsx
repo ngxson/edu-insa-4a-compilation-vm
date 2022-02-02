@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+const TICK_DELAY = 50;
+export const FLAG_UNTICK = 1;
+export const FLAG_SKIP_BREAKPOINT = 2;
+
 function MachineControl({machine, tickFn}) {
   const [intervalId, setIntervalId] = useState();
 
@@ -12,7 +16,7 @@ function MachineControl({machine, tickFn}) {
       clearInterval(intervalId);
       setIntervalId(null);
     } else {
-      tickFn();
+      tickFn(FLAG_SKIP_BREAKPOINT);
       const id = setInterval(() => {
         const hasError = tickFn();
         // stop on having error
@@ -21,7 +25,7 @@ function MachineControl({machine, tickFn}) {
           clearInterval(id);
           setIntervalId(null);
         }
-      }, 500);
+      }, TICK_DELAY);
       setIntervalId(id);
     }
   }
@@ -46,11 +50,11 @@ function MachineControl({machine, tickFn}) {
           : <>Play <i className="fas fa-play"></i></>
         }</button>
         &nbsp;&nbsp;
-        <button className="btn btn-secondary" onClick={() => tickFn(true)}>
+        <button className="btn btn-secondary" onClick={() => tickFn(FLAG_UNTICK)}>
           <i className="fas fa-arrow-left"></i>
         </button>
         &nbsp;&nbsp;
-        <button className="btn btn-primary" onClick={() => tickFn()}>
+        <button className="btn btn-primary" onClick={() => tickFn(FLAG_SKIP_BREAKPOINT)}>
           Next tick
           <i className="fas fa-arrow-right"></i>
         </button>

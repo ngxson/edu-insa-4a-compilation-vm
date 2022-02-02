@@ -16,11 +16,15 @@ class Machine {
     this.memory.setData(0, VALUE_DUMMY);
   }
 
-  tick = () => {
+  tick = (skipBreakpoint) => {
     // load the instruction
     const instruction = this.program.getInstruction(this.ip);
     console.log(instruction);
     if (!instruction) throw new Error('Program ended');
+    // check breakpoint
+    if (!skipBreakpoint && instruction.breakpoint) {
+      throw new Error('Breakpoint');
+    }
     // execute the instruction
     this._takeSnapshot();
     const {opcode, value} = instruction;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CodeEditor from "./frontend/CodeEditor";
 import CodeViewer from "./frontend/CodeViewer";
-import MachineControl from "./frontend/MachineControl";
+import MachineControl, { FLAG_SKIP_BREAKPOINT, FLAG_UNTICK } from "./frontend/MachineControl";
 import MemoryViewer from "./frontend/MemoryViewer";
 import ScreenViewer from "./frontend/ScreenViewer";
 import Machine from "./vm/machine";
@@ -17,16 +17,20 @@ function App() {
     setMachine(machine);
   }, []);
 
-  const tickFn = (isUntick=false) => {
+  const rerender = () => render(Date.now());
+
+  const tickFn = (flag=0) => {
+    const isUntick = flag & FLAG_UNTICK;
+    const skipBrk = flag & FLAG_SKIP_BREAKPOINT;
     let hasError = false;
     try {
-      if (!isUntick) machine.tick();
+      if (!isUntick) machine.tick(skipBrk);
       else machine.untick();
     } catch (e) {
       window.toastr.error(e.message);
       hasError = true;
     }
-    render(Date.now());
+    rerender();
     return hasError;
   };
 
@@ -44,7 +48,7 @@ function App() {
       <div className="row">
         <div className="col-6">
           {!showCodeEditor &&
-            <CodeViewer program={machine.program} ip={machine.ip} handleShowEditor={() => setShowCodeEditor(true)} />
+            <CodeViewer program={machine.program} ip={machine.ip} handleShowEditor={() => setShowCodeEditor(true)} rerender={rerender} />
           }
           <CodeEditor onAssemblyCodeChanged={setAssemblyCode} show={showCodeEditor} />
           <br/><br/><br/><br/><br/><br/><br/><br/><br/>
