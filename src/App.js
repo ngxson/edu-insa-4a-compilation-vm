@@ -3,6 +3,7 @@ import CodeEditor from "./frontend/CodeEditor";
 import CodeViewer from "./frontend/CodeViewer";
 import MachineControl from "./frontend/MachineControl";
 import MemoryViewer from "./frontend/MemoryViewer";
+import ScreenViewer from "./frontend/ScreenViewer";
 import Machine from "./vm/machine";
 
 function App() {
@@ -52,7 +53,12 @@ function App() {
           }
         </div>
         <div className="col-6">
-          <MemoryViewer memory={machine.memory} bp={machine.bp} sp={machine.sp} />
+          {!showCodeEditor && <>
+            <MemoryViewer memory={machine.memory} bp={machine.bp} sp={machine.sp} />
+            <br/>
+            <ScreenViewer screen={machine.screen} />
+          </>
+          }
         </div>
       </div>
     </div>

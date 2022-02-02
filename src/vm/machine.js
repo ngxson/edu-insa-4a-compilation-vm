@@ -9,6 +9,7 @@ class Machine {
   memory = new Memory();
   program = new Program();
   history = []; // list of snapshots
+  screen = ''; // output console buffer
 
   boot(assemblyCode) {
     this.program.loadProgram(assemblyCode, this.instruction);
@@ -42,6 +43,7 @@ class Machine {
     this.ip = snapshot.ip;
     this.memory = snapshot.memory;
     this.clk = snapshot.clk;
+    this.screen = snapshot.scren;
   }
 
   _getXY = () => {
@@ -62,6 +64,7 @@ class Machine {
       sp: this.sp,
       ip: this.ip,
       clk: this.clk,
+      screen: this.screen,
       memory: this.memory.clone(),
     };
     this.history.push(snapshot);
@@ -72,6 +75,26 @@ class Machine {
     if (addr === undefined) {
       throw new Error(`jmp: label name "${label}" not found`);
     }
+  }
+
+  _popStack = () => {
+    const v = this.memory.getData(this.sp);
+    this.memory.erase(this.sp);
+    this.sp--;
+    return v;
+  }
+
+  _internalFunction = (label) => {
+    console.log(label)
+    if (label === 'print_int') {
+      const {value} = this._popStack();
+      this.screen += `${value}`;
+      return true;
+    } else if (label === 'print_newline') {
+      this.screen += '\n';
+      return true;
+    }
+    return false;
   }
 
   instruction = {
@@ -162,6 +185,7 @@ class Machine {
 
     // call/ret
     call: (label) => {
+      if (this._internalFunction(label)) return;
       this._checkLabelExist(label);
       this.instruction.mpush(this.ip, DATA_TYPE_INSTR_ADDR);
       this.instruction.mpush(this.bp, DATA_TYPE_MEM_ADDR);
@@ -169,13 +193,9 @@ class Machine {
       this.bp = this.sp;
     },
     ret: (n) => {
-      const {value: oldBP} = this.memory.getData(this.sp);
-      this.memory.erase(this.sp);
-      this.sp--;
+      const {value: oldBP} = this._popStack();
       this.bp = oldBP;
-      const {value: returnAddr} = this.memory.getData(this.sp);
-      this.memory.erase(this.sp);
-      this.sp--;
+      const {value: returnAddr} = this._popStack();
       this.ip = returnAddr;
       for (let i = 0; i < n; i++) {
         this.memory.erase(this.sp);
@@ -183,9 +203,7 @@ class Machine {
       }
     },
     iret: (n) => {
-      const {value: returnValue} = this.memory.getData(this.sp);
-      this.memory.erase(this.sp);
-      this.sp--;
+      const {value: returnValue} = this._popStack();
       this.instruction.ret(n);
       this.instruction.mpush(returnValue);
     },
