@@ -4,6 +4,7 @@ class Program {
   instructions = [];
   lines = []; // [{text, instruction}, ...]
   labelTable = {}; // 'label' => addr
+  registerTable = []; // ['t1', 't2', ...]
 
   loadProgram = (assemblyCode, supportedInstructions) => {
     // breaks input code to array of text lines
@@ -36,6 +37,20 @@ class Program {
     
     //console.log(this.instructions);
     //console.log(this.lines);
+  }
+
+  // WORK IN PROGRESS
+  decodeRegisterOperation = (text) => {
+    text = text.replace(/\s+/, ''); // remove spaces
+    const cjumpRegex = /cjump(t[a-z0-9]+)([<>=]+)(t[a-z0-9]+)[\-]+>(.*)/;
+    const movRegex = /cjump(t[a-z0-9]+)([<>=]+)(t[a-z0-9]+)[\-]+>(.*)/;
+    if (text.startsWith('cjump')) {
+      const [_, reg1, op, reg2, label] = text.match(cjumpRegex);
+      return {
+        opcode: 'cjump',
+        value: {reg1, op, reg2, label}
+      }
+    }
   }
 
   setBreakpoint = (addr) => {
