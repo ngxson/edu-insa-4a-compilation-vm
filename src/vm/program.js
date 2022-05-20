@@ -41,6 +41,7 @@ class Program {
 
   // WORK IN PROGRESS
   decodeRegisterOperation = (text) => {
+    /* eslint-disable */
     text = text.replace(/\s+/, ''); // remove spaces
     const cjumpRegex = /cjump(t[a-z0-9]+)([<>=]+)(t[a-z0-9]+)[\-]+>(.*)/;
     const movRegex = /cjump(t[a-z0-9]+)([<>=]+)(t[a-z0-9]+)[\-]+>(.*)/;
@@ -51,6 +52,7 @@ class Program {
         value: {reg1, op, reg2, label}
       }
     }
+    /* eslint-enable */
   }
 
   setBreakpoint = (addr) => {

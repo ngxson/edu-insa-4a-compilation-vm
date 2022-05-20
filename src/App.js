@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CodeEditor from "./frontend/CodeEditor";
 import CodeViewer from "./frontend/CodeViewer";
+import GeneralInfo from "./frontend/GeneralInfo";
 import MachineControl, { FLAG_SKIP_BREAKPOINT, FLAG_UNTICK } from "./frontend/MachineControl";
 import MemoryViewer from "./frontend/MemoryViewer";
 import ScreenViewer from "./frontend/ScreenViewer";
@@ -51,6 +52,7 @@ function App() {
             <CodeViewer program={machine.program} ip={machine.ip} handleShowEditor={() => setShowCodeEditor(true)} rerender={rerender} />
           }
           <CodeEditor onAssemblyCodeChanged={setAssemblyCode} show={showCodeEditor} />
+          <GeneralInfo />
           <br/><br/><br/><br/><br/><br/><br/><br/><br/>
           {!showCodeEditor &&
             <MachineControl machine={machine} tickFn={tickFn} />
